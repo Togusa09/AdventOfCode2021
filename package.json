@@ -8,6 +8,8 @@
     "task01b": "ts-node Task01/task01b.ts",
     "task02a": "ts-node Task02/task02a.ts",
     "task02b": "ts-node Task02/task02b.ts",
+    "task03a": "ts-node Task03/task03a.ts",
+    "task03b": "ts-node Task03/task03b.ts",
     "watch": "npx tsc -w"
   },
   "author": "",
