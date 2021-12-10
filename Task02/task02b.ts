@@ -19,11 +19,9 @@ export const task2b = () =>
     array.forEach((command) => {
         switch (command.direction){
             case 'up':
-                //y -= command.distance
                 aim -= command.distance
                 break
             case 'down':
-                //y += command.distance
                 aim += command.distance
                 break
             case 'forward':

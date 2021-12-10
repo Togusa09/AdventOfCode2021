@@ -11,9 +11,7 @@ export const task3a = () =>
     var fileContent = file.toString().split("\n");
 
     var bitCount = fileContent[0].length
-
-    let arrayLength = fileContent.length
-    let halfArrayLength = arrayLength / 2
+    let halfArrayLength = fileContent.length / 2
 
     let gammaRate = ''
     let epsilonRate = ''
@@ -21,8 +19,7 @@ export const task3a = () =>
     for(var index = 0; index < bitCount; index++){
         var count = fileContent.map(line => line[index]).filter(char => char == '0').length
 
-        if (count > halfArrayLength)
-        {
+        if (count > halfArrayLength) {
             gammaRate += '0'
             epsilonRate += '1'
         }
@@ -33,9 +30,7 @@ export const task3a = () =>
     }
 
     console.log(`Gamma Rate ${gammaRate} Epsilon Rate ${epsilonRate}`)
-   
     console.log(`Result ${parseInt(gammaRate, 2) * parseInt(epsilonRate, 2) }`)
 }
-
 
 task3a()
