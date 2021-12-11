@@ -35,78 +35,39 @@ export const task5a = () =>
     var pointTracking : Map<string, number> = new Map<string, number>()
     coords.forEach(coord => {
 
-        var startXCoord = 0, endXCoord = 0
-        if (coord.start.x <= coord.end.x){
-            startXCoord = coord.start.x
-            endXCoord = coord.end.x
-        } else {
-            startXCoord = coord.end.x
-            endXCoord = coord.start.x
-        }
+        let fileName = "Task05/input_day5.txt"
+        //let fileName = "Task05/test_day5.txt"
 
-        var startYCoord = 0, endYCoord = 0
-        if (coord.start.y <= coord.end.y){
-            startYCoord = coord.start.y
-            endYCoord = coord.end.y
-        } else {
-            startYCoord = coord.end.y
-            endYCoord = coord.start.y
-        }
+        const file = readFileSync(fileName, 'utf-8');
+        var fileContent = file.toString().split("\n");
 
-        for(var x = startXCoord; x <= endXCoord; x++){
-            for(var y = startYCoord; y <= endYCoord; y++){
-                if (!pointTracking.has(`${x}_${y}`)){
-                    pointTracking.set(`${x}_${y}`, 0)
-                }
-
-                let val = (pointTracking.get(`${x}_${y}`) ?? 0) + 1
-                pointTracking.set(`${x}_${y}`, val)
+        const coords = fileContent.filter(line => line != '').map(line => {
+            var splitCoords = line.split("->")
+            return {
+                start: parseCoords(splitCoords[0]),
+                end: parseCoords(splitCoords[1])
             }
-        }
+        }).filter(line => isHorizontal(line.start, line.end) || isVertical(line.start, line.end))
 
-        // if (coord.start.x < coord.end.x){
-        //     for(var x = coord.start.x; x <= coord.end.x; x++){
-        //         if (coord.start.y > coord.end.y){
-        //             for(var y = coord.start.y; y <= coord.end.y; y++){
-        //                 if (!pointTracking.has(`${x}_${y}`)){
-        //                     pointTracking.set(`${x}_${y}`, 0)
-        //                 }
-        
-        //                 pointTracking.set(`${x}_${y}`, (pointTracking.get(`${x}_${y}`) ?? 0) + 1)
-        //             }
-        //         } else {
-        //             for(var y = coord.end.y; y <= coord.start.y; y++){
-        //                 if (!pointTracking.has(`${x}_${y}`)){
-        //                     pointTracking.set(`${x}_${y}`, 0)
-        //                 }
-        
-        //                 pointTracking.set(`${x}_${y}`, (pointTracking.get(`${x}_${y}`) ?? 0) + 1)
-        //             }
-        //         }
-        //     }
-        // }
-        // else{
-        //     for(var x = coord.end.x; x <= coord.start.x; x++){
-        //         if (coord.start.y > coord.end.y){
-        //             for(var y = coord.start.y; y <= coord.end.y; y++){
-        //                 if (!pointTracking.has(`${x}_${y}`)){
-        //                     pointTracking.set(`${x}_${y}`, 0)
-        //                 }
-        
-        //                 pointTracking.set(`${x}_${y}`, (pointTracking.get(`${x}_${y}`) ?? 0) + 1)
-        //             }
-        //         } else {
-        //             for(var y = coord.end.y; y <= coord.start.y; y++){
-        //                 if (!pointTracking.has(`${x}_${y}`)){
-        //                     pointTracking.set(`${x}_${y}`, 0)
-        //                 }
-        
-        //                 pointTracking.set(`${x}_${y}`, (pointTracking.get(`${x}_${y}`) ?? 0) + 1)
-        //             }
-        //         }
-        //     }
-        // }
-        
+        var pointTracking : Map<string, number> = new Map<string, number>()
+        coords.forEach(coord => {
+            var diffX = coord.end.x - coord.start.x;
+            var diffY = coord.end.y - coord.start.y;
+
+            var targetDistance = diffX == 0 ? Math.abs(diffY) : Math.abs(diffX)
+
+            for(var distance = 0; distance <=  targetDistance; distance++){
+                    var posX = coord.start.x + ( Math.sign(diffX) * distance)
+                    var posY = coord.start.y + ( Math.sign(diffY) * distance)
+
+                    if (!pointTracking.has(`${posX}_${posY}`)){
+                        pointTracking.set(`${posX}_${posY}`, 0)
+                    }
+
+                    let val = (pointTracking.get(`${posX}_${posY}`) ?? 0) + 1
+                    pointTracking.set(`${posX}_${posY}`, val)
+            }
+        })
     })
 
     var count = 0;
