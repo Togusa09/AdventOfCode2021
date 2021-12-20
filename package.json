@@ -14,6 +14,8 @@
     "task04b": "ts-node Task04/task04b.ts",
     "task05a": "ts-node Task05/task05a.ts",
     "task05b": "ts-node Task05/task05b.ts",
+    "task06a": "ts-node Task06/task06a.ts",
+    "task06b": "ts-node Task06/task06b.ts",
     "watch": "npx tsc -w"
   },
   "author": "",
